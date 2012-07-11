@@ -1,8 +1,8 @@
 class dataprotector ($cm_ip, $cm_fqdn) {
 
   service { 'xinetd':
-    ensure  => 'running'
-    enabled => true
+    ensure => 'running',
+    enable => true
   }
 
   xinetd::service { 'omni':
@@ -33,7 +33,7 @@ class dataprotector ($cm_ip, $cm_fqdn) {
     owner   => 'root',
     group   => 'root',
     mode    => '0600',
-    content => $cm_ip
+    content => "$cm_ip\n"
   }
 
 }
