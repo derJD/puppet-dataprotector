@@ -1,4 +1,3 @@
-task :default => :lint
 source :rubygems
 
 if ENV.key?('PUPPET_VERSION')
