@@ -29,7 +29,6 @@
 class dataprotector ($cm_ip, $cm_fqdn) {
 
   service { 'xinetd':
-    ensure => 'running',
     enable => true
   }
 
