@@ -1,3 +1,31 @@
+# == Class: dataprotector
+#
+# Manages clients for HP Data Protector
+#
+# === Parameters
+#
+# [*cm_ip*]
+#   IP address of the cell manager (as seen from/to the client)
+#
+# [*cm_fqdn*]
+#   FQDN of the cell manager
+#
+# === Examples
+#
+#  class { 'dataprotector':
+#    cm_ip   => '1.2.3.4',
+#    cm_fqdn => 'cellmanager.dom.ain'
+#  }
+#
+# === Authors
+#
+# Michael Moll <kvedulv@kvedulv.de>
+#
+# === Copyright
+#
+# Copyright 2012 by Michael Moll
+#
+
 class dataprotector ($cm_ip, $cm_fqdn) {
 
   service { 'xinetd':
@@ -12,7 +40,16 @@ class dataprotector ($cm_ip, $cm_fqdn) {
     flags       => 'IPv4'
   }
 
-  package { '[ob2-core, ob2-da]':
+  case $::osfamily {
+    Debian: {
+      $packages = [ob2-core, ob2-da]
+    }
+    RedHat: {
+      $packages = [OB2-CORE, OB2-DA]
+    }
+    default: {}
+  }
+    package { $packages:
     ensure  => 'installed'
   }
 
