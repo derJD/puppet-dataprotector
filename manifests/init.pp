@@ -39,11 +39,11 @@ class dataprotector ($cm_ip, $cm_fqdn) {
     flags       => 'IPv4'
   }
 
-  case $::osfamily {
-    Debian: {
+  case $::operatingsystem {
+    Debian, Ubuntu: {
       $packages = [ob2-core, ob2-da]
     }
-    RedHat: {
+    CentOS, RedHat: {
       $packages = [OB2-CORE, OB2-DA]
     }
     default: {}
