@@ -41,15 +41,21 @@ class dataprotector ($cm_ip, $cm_fqdn) {
 
   case $::operatingsystem {
     Debian, Ubuntu: {
-      $packages = [ob2-core, ob2-da]
+      $corepackage = 'ob2-core'
+      $dapackage = 'ob2-da'
     }
     CentOS, RedHat: {
-      $packages = [OB2-CORE, OB2-DA]
+      $corepackage = 'OB2-CORE'
+      $dapackage = 'OB2-DA'
     }
     default: {}
   }
-    package { $packages:
+  package { $corepackage:
     ensure  => 'installed'
+  }
+  package { $dapackage:
+    ensure  => 'installed',
+    require => package[$corepackage]
   }
 
   file { '/var/log/omni':
