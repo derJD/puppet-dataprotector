@@ -55,7 +55,7 @@ class dataprotector ($cm_ip, $cm_fqdn) {
   }
   package { $dapackage:
     ensure  => 'installed',
-    require => package[$corepackage]
+    require => Package[$corepackage]
   }
 
   file { '/var/log/omni':
