@@ -39,12 +39,12 @@ class dataprotector ($cm_ip, $cm_fqdn) {
     flags       => 'IPv4'
   }
 
-  case $::operatingsystem {
-    Debian, Ubuntu: {
+  case $::osfamily {
+    Debian: {
       $corepackage = 'ob2-core'
       $dapackage = 'ob2-da'
     }
-    CentOS, RedHat: {
+    RedHat, SuSE: {
       $corepackage = 'OB2-CORE'
       $dapackage = 'OB2-DA'
     }
@@ -74,8 +74,16 @@ class dataprotector ($cm_ip, $cm_fqdn) {
     ensure  => file,
     owner   => 'root',
     group   => 'root',
-    mode    => '0600',
-    content => "$cm_ip\n"
+    mode    => '0644',
+    content => "${cm_ip}\n"
+  }
+
+  file { '/etc/opt/omni/client/cell_server':
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => "${cm_fqdn}\n"
   }
 
 }
