@@ -28,17 +28,6 @@
 
 class dataprotector ($cm_ip, $cm_fqdn) {
 
-  service { 'xinetd':
-    enable => true
-  }
-
-  xinetd::service { 'omni':
-    port        => '5555',
-    server      => '/opt/omni/lbin/inet',
-    server_args => 'inet -log /var/opt/omni/log/inet.log',
-    flags       => 'IPv4'
-  }
-
   case $::osfamily {
     Debian: {
       $corepackage = 'ob2-core'
@@ -66,7 +55,6 @@ class dataprotector ($cm_ip, $cm_fqdn) {
   host { $cm_fqdn:
     ensure       => present,
     ip           => $cm_ip,
-    host_aliases => inline_template('<%= cm_fqdn.split(".")[0] %>'),
     target       => '/etc/hosts'
   }
 
