@@ -7,14 +7,14 @@
 # [*cm_ip*]
 #   IP address of the cell manager (as seen from/to the client)
 #
-# [*cm_fqdn*]
-#   FQDN of the cell manager
+# [*cm_name*]
+#   Hostname of the cell manager (as given by the CM!)
 #
 # === Examples
 #
 #  class { 'dataprotector':
 #    cm_ip   => '1.2.3.4',
-#    cm_fqdn => 'cellmanager.dom.ain'
+#    cm_name => 'cellmanager.dom.ain'
 #  }
 #
 # === Authors
@@ -26,7 +26,7 @@
 # Copyright 2012 by Michael Moll
 #
 
-class dataprotector ($cm_ip, $cm_fqdn) {
+class dataprotector ($cm_ip, $cm_name) {
 
   case $::osfamily {
     Debian: {
@@ -52,10 +52,10 @@ class dataprotector ($cm_ip, $cm_fqdn) {
     target => '/var/opt/omni/log'
   }
 
-  host { $cm_fqdn:
-    ensure       => present,
-    ip           => $cm_ip,
-    target       => '/etc/hosts'
+  host { $cm_name:
+    ensure => present,
+    ip     => $cm_ip,
+    target => '/etc/hosts'
   }
 
   file { '/etc/opt/omni/client/allow_hosts':
@@ -71,7 +71,7 @@ class dataprotector ($cm_ip, $cm_fqdn) {
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    content => "${cm_fqdn}\n"
+    content => "${cm_name}\n"
   }
 
 }
