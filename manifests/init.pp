@@ -19,7 +19,7 @@
 #
 # === Authors
 #
-# Michael Moll <kvedulv@kvedulv.de>
+# Michael Moll <mmoll@mmoll.at>
 #
 # === Copyright
 #
