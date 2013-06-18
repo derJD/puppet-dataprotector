@@ -39,6 +39,16 @@ class dataprotector ($cm_ip, $cm_name) {
     }
     default: {}
   }
+
+  augeas { 'remove5555port':
+    before  => Package[$corepackage],
+    changes =>  [
+                'rm /files/etc/services/service-name[. = "personal-agent"][protocol = "tcp"]',
+                'rm /files/etc/services/service-name[. = "personal-agent"][protocol = "udp"]',
+                'rm /files/etc/services/service-name[. = "rplay"][protocol = "udp"]'
+                ],
+  }
+
   package { $corepackage:
     ensure  => 'installed'
   }
