@@ -25,7 +25,6 @@
 #
 # Copyright 2012 by Michael Moll
 #
-
 class dataprotector ($cm_ip, $cm_name) {
 
   case $::osfamily {
@@ -39,6 +38,13 @@ class dataprotector ($cm_ip, $cm_name) {
     }
     default: {}
   }
+  package { $corepackage:
+    ensure  => 'installed',
+  }
+  package { $dapackage:
+    ensure  => 'installed',
+    require => Package[$corepackage],
+  }
 
   augeas { 'remove5555port':
     before  => Package[$corepackage],
@@ -47,14 +53,6 @@ class dataprotector ($cm_ip, $cm_name) {
                 'rm /files/etc/services/service-name[. = "personal-agent"][protocol = "udp"]',
                 'rm /files/etc/services/service-name[. = "rplay"][protocol = "udp"]'
                 ],
-  }
-
-  package { $corepackage:
-    ensure  => 'installed',
-  }
-  package { $dapackage:
-    ensure  => 'installed',
-    require => Package[$corepackage],
   }
 
   file { '/var/log/omni':
@@ -66,7 +64,7 @@ class dataprotector ($cm_ip, $cm_name) {
   host { $cm_name:
     ensure => present,
     ip     => $cm_ip,
-    target => '/etc/hosts'
+    target => '/etc/hosts',
   }
 
   file { '/etc/opt/omni/client/allow_hosts':
