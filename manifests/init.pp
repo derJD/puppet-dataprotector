@@ -50,16 +50,17 @@ class dataprotector ($cm_ip, $cm_name) {
   }
 
   package { $corepackage:
-    ensure  => 'installed'
+    ensure  => 'installed',
   }
   package { $dapackage:
     ensure  => 'installed',
-    require => Package[$corepackage]
+    require => Package[$corepackage],
   }
 
   file { '/var/log/omni':
-    ensure => link,
-    target => '/var/opt/omni/log'
+    ensure  => link,
+    target  => '/var/opt/omni/log',
+    require => Package[$corepackage],
   }
 
   host { $cm_name:
@@ -73,7 +74,8 @@ class dataprotector ($cm_ip, $cm_name) {
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    content => "${cm_ip}\n"
+    content => "${cm_ip}\n",
+    require => Package[$corepackage],
   }
 
   file { '/etc/opt/omni/client/cell_server':
@@ -81,7 +83,8 @@ class dataprotector ($cm_ip, $cm_name) {
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    content => "${cm_name}\n"
+    content => "${cm_name}\n",
+    require => Package[$corepackage],
   }
 
 }
