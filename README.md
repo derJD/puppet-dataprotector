@@ -3,7 +3,7 @@
 
 ## Example:
 
-```
+```puppet
   class { 'dataprotector':
     cm_ip   => '1.2.3.4',
     cm_name => 'cellmanager.dom.ain'
