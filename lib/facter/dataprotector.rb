@@ -14,7 +14,7 @@ if Facter.value('dataprotector') == true
     if core_line
       Facter.add(:dataprotector_version) do
         setcode do
-          core_line.post_match
+          core_line.post_match.chomp
         end
       end
     end
@@ -24,6 +24,7 @@ end
 Facter.add(:dataprotector_patch) do
   confine :dataprotector => true
   setcode do
-    File.read('/opt/omni/.patch_core')
+    patchlevel = File.read('/opt/omni/.patch_core')
+    patchlevel.chomp
   end
 end
