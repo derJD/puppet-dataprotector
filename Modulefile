@@ -1,5 +1,5 @@
 name    'mmoll-dataprotector'
-version '0.0.5'
+version '0.0.6'
 source 'git://github.com/mmoll/puppet-dataprotector'
 author 'Michael Moll'
 license 'Apache License, Version 2.0'
