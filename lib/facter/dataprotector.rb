@@ -5,7 +5,8 @@ end
 if Facter.value('dataprotector')
   File.readlines('/etc/opt/omni/client/omni_info').each do |line|
     Facter.add(:dataprotector_version) do
-      setcode {  (/^\-key\ core\ (.*)\-version\ /.match(line)).post_match.chomp }
+      version = (/^\-key\ core\ (.*)\-version\ /.match(line)).post_match.chomp
+      setcode {  version } unless version.empty?
     end
   end
 
