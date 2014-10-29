@@ -1,0 +1,10 @@
+#####################
+# Managed by puppet #
+#####################
+
+<% @_groups.each do |group| -%>
+CLASS <%= group['class'] %>
+PERMISSION <%= group['perm'].join %>
+DSCRIPTION "<%= group['desc'] %>"
+
+<% end -%>

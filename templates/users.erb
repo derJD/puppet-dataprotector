@@ -1,0 +1,15 @@
+#####################
+# Managed by puppet #
+#####################
+
+<% @_users.each do |list| -%>
+<%   list['user'].each do |user| -%>
+<%     list['server'].each do |server| -%>
+<%       if list['domain'].empty? -%>
+"" "<%= user -%>" "*" <%= server -%> "<%= list['group'] %>"
+<%       else -%>
+"" "<%= user.upcase -%>" "<%= list['domain'].upcase -%>" <%= server -%> "<%= list['group'] %>"
+<%       end -%>
+<%     end -%>
+<%   end -%>
+<% end -%>
