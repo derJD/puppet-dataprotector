@@ -25,7 +25,12 @@
 #
 # Copyright 2012 by Michael Moll
 #
-class dataprotector inherits dataprotector::params {
+class dataprotector (
+  $xinetd = {
+    ensure => $dataprotector::params::ensure,
+    ipv4   => $dataprotector::params::ipv4,
+    ipv6   => $dataprotector::params::ipv6, }
+  ) inherits dataprotector::params {
 
   package { $pkg['core']:
     ensure => 'installed',
@@ -40,6 +45,12 @@ class dataprotector inherits dataprotector::params {
     ensure  => link,
     target  => $path['log'],
     require => Package[$pkg['core']],
+  }
+
+  class { 'dataprotector::xinetd':
+    ensure => $xinetd['ensure'],
+    ipv4   => $xinetd['ipv4'],
+    ipv6   => $xinetd['ipv6'],
   }
 
   augeas { 'remove5555port':
