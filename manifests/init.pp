@@ -25,64 +25,30 @@
 #
 # Copyright 2012 by Michael Moll
 #
-class dataprotector ($cm_ip, $cm_name) {
+class dataprotector inherits dataprotector::params {
 
-  case $::osfamily {
-    Debian: {
-      $corepackage = 'ob2-core'
-      $dapackage = 'ob2-da'
-    }
-    RedHat, SuSE: {
-      $corepackage = 'OB2-CORE'
-      $dapackage = 'OB2-DA'
-    }
-    default: {}
+  package { $pkg['core']:
+    ensure => 'installed',
   }
-  package { $corepackage:
+
+  package { $pkg['da']:
     ensure  => 'installed',
+    require => Package[$pkg['core']],
   }
-  package { $dapackage:
-    ensure  => 'installed',
-    require => Package[$corepackage],
+
+  file { '/var/log/omni':
+    ensure  => link,
+    target  => $path['log'],
+    require => Package[$pkg['core']],
   }
 
   augeas { 'remove5555port':
-    before  => Package[$corepackage],
+    before  => Package[$pkg['core']],
     changes =>  [
                 'rm /files/etc/services/service-name[. = "personal-agent"][protocol = "tcp"]',
                 'rm /files/etc/services/service-name[. = "personal-agent"][protocol = "udp"]',
                 'rm /files/etc/services/service-name[. = "rplay"][protocol = "udp"]'
                 ],
-  }
-
-  file { '/var/log/omni':
-    ensure  => link,
-    target  => '/var/opt/omni/log',
-    require => Package[$corepackage],
-  }
-
-  host { $cm_name:
-    ensure => present,
-    ip     => $cm_ip,
-    target => '/etc/hosts',
-  }
-
-  file { '/etc/opt/omni/client/allow_hosts':
-    ensure  => file,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    content => "${cm_ip}\n",
-    require => Package[$corepackage],
-  }
-
-  file { '/etc/opt/omni/client/cell_server':
-    ensure  => file,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    content => "${cm_name}\n",
-    require => Package[$corepackage],
   }
 
 }
