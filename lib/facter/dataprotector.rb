@@ -1,16 +1,19 @@
 Facter.add(:dataprotector) do
-  setcode { File.exist?('/etc/opt/omni/client/omni_info') ? true : false }
-end
+  setcode do
+    dataprotector = { }
+    dataprotector['installed'] = File.exist?('/etc/opt/omni/client/omni_info') ? true : false
 
-if Facter.value('dataprotector')
-  File.readlines('/etc/opt/omni/client/omni_info').each do |line|
-    Facter.add(:dataprotector_version) do
-      version = (/^\-key\ core\ (.*)\-version\ /.match(line)).post_match.chomp
-      setcode { version } unless version.empty?
+    if dataprotector['installed'] == true
+      dataprotector['component'] = {  }
+      File.readlines('/etc/opt/omni/client/omni_info').each do |line| 
+        component = /\-key\ (.*)\ -desc.*\-version\ (.*)($|\n)/.match(line)
+        patch = File.exist?("/opt/omni/.patch_#{ component[1] }") ? File.read("/opt/omni/.patch_#{ component[1] }").chomp : "none"
+        dataprotector['component']["#{ component[1] }"] = {
+          'version' => "#{ component[2] }",
+          'patch'   => "#{ patch }"
+        }
+      end
     end
-  end
-
-  Facter.add(:dataprotector_patch) do
-    setcode { (File.read('/opt/omni/.patch_core')).chomp }
+    dataprotector
   end
 end
