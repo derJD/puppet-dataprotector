@@ -1,0 +1,18 @@
+#####################
+# Managed by puppet #
+#####################
+
+service omni
+{
+  socket_type = stream
+  protocol    = tcp
+  wait        = no
+  user        = root
+  server      = /opt/omni/lbin/inet
+  server_args = inet -log /var/opt/omni/log/inet.log
+  disable     = no
+  flags       = <%= @name.upcase %>
+  cps         = 1100 10
+  instances   = UNLIMITED
+  per_source  = UNLIMITED
+}
