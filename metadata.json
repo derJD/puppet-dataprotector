@@ -3,7 +3,7 @@
   "version": "0.0.8",
   "author": "Michael Moll",
   "summary": "HP Data Protector client module",
-  "license": "Apache 2.0",
+  "license": "Apache-2.0",
   "source": "https://github.com/mmoll/puppet-dataprotector",
   "project_page": "https://github.com/mmoll/puppet-dataprotector",
   "issues_url": "https://github.com/mmoll/puppet-dataprotector/issues",
