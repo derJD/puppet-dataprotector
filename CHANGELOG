@@ -1,25 +1,22 @@
+2014-12-26 - Version 0.0.8
+* swich to metadata.json
+
 2013-11-30 - Version 0.0.7
--
 * improvements to custom facts by Jean-Denis Gebhardt
 
 2013-09-25 - Version 0.0.6
--
 * chomp facts
 
 2013-07-04 - Version 0.0.5
--
 * generate some custom facts
 * delete some port 5555 assignments
 
 2013-01-28 - Version 0.0.4
--
 * sync with internal version
 
 2013-01-16 - Version 0.0.3
--
 * unreleased dummy version
 
 2012-12-11 - Version 0.0.2
--
 * various small changes
 * set cell_server

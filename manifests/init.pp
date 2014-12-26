@@ -36,11 +36,14 @@ class dataprotector ($cm_ip, $cm_name) {
       $corepackage = 'OB2-CORE'
       $dapackage = 'OB2-DA'
     }
-    default: {}
+    default: {
+    }
   }
+
   package { $corepackage:
     ensure  => 'installed',
   }
+
   package { $dapackage:
     ensure  => 'installed',
     require => Package[$corepackage],
@@ -48,10 +51,11 @@ class dataprotector ($cm_ip, $cm_name) {
 
   augeas { 'remove5555port':
     before  => Package[$corepackage],
+    context => '/files/etc/services',
     changes =>  [
-                'rm /files/etc/services/service-name[. = "personal-agent"][protocol = "tcp"]',
-                'rm /files/etc/services/service-name[. = "personal-agent"][protocol = "udp"]',
-                'rm /files/etc/services/service-name[. = "rplay"][protocol = "udp"]'
+                'rm service-name[. = "personal-agent"][protocol = "tcp"]',
+                'rm service-name[. = "personal-agent"][protocol = "udp"]',
+                'rm service-name[. = "rplay"][protocol = "udp"]'
                 ],
   }
 

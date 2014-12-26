@@ -1,0 +1,29 @@
+{
+  "name": "mmoll-dataprotector",
+  "version": "0.0.8",
+  "author": "Michael Moll",
+  "summary": "HP Data Protector client module",
+  "license": "Apache 2.0",
+  "source": "https://github.com/mmoll/puppet-dataprotector",
+  "project_page": "https://github.com/mmoll/puppet-dataprotector",
+  "issues_url": "https://github.com/mmoll/puppet-dataprotector/issues",
+  "tags": ["backup", "HP Data Protector", "Omniback"],
+  "operatingsystem_support": [
+    {
+    "operatingsystem": "Debian",
+    "operatingsystemrelease": [ "6.0", "7.0" ]
+    },
+    {
+    "operatingsystem": "RedHat",
+    "operatingsystemrelease": [ "5.0", "6.0", "7.0" ]
+    },
+    {
+    "operatingsystem": "SLES",
+    "operatingsystemrelease": [ "11.3", "12.0" ]
+    },
+    {
+    "operatingsystem": "Ubuntu",
+    "operatingsystemrelease": [ "10.04", "12.04", "14.04" ]
+    }
+  ]
+}
