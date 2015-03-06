@@ -7,7 +7,17 @@
   "source": "https://github.com/mmoll/puppet-dataprotector",
   "project_page": "https://github.com/mmoll/puppet-dataprotector",
   "issues_url": "https://github.com/mmoll/puppet-dataprotector/issues",
-  "tags": ["backup", "HP Data Protector", "Omniback"],
+  "tags": [ "backup", "HP Data Protector", "Omniback" ],
+  "dependencies": [
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">= 2.0.0 < 5.0.0"
+    },
+    {
+      "name": "puppetlabs/xinetd",
+      "version_requirement": ">= 1.2.0 < 2.0.0"
+    }
+  ],
   "operatingsystem_support": [
     {
     "operatingsystem": "CentOS",

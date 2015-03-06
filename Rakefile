@@ -8,4 +8,9 @@ PuppetLint.configuration.send('disable_class_parameter_defaults')
 PuppetLint.configuration.send('disable_documentation')
 PuppetLint.configuration.relative = true
 
-task :default => [:lint]
+task :default => [:lint, :metadata]
+
+desc "Lint metadata.json file"
+task :metadata do
+  sh "metadata-json-lint metadata.json"
+end
