@@ -28,11 +28,11 @@
 class dataprotector ($cm_ip, $cm_name) {
 
   case $::osfamily {
-    Debian: {
+    'Debian': {
       $corepackage = 'ob2-core'
       $dapackage = 'ob2-da'
     }
-    RedHat, SuSE: {
+    'RedHat', 'SuSE': {
       $corepackage = 'OB2-CORE'
       $dapackage = 'OB2-DA'
     }

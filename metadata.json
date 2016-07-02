@@ -1,12 +1,12 @@
 {
-  "name": "mmoll-dataprotector",
-  "version": "0.0.8",
-  "author": "Michael Moll",
+  "name": "psyco01-dataprotector",
+  "version": "0.0.9",
+  "author": "Jean-Denis Gebhardt",
   "summary": "HP Data Protector client module",
   "license": "Apache-2.0",
-  "source": "https://github.com/mmoll/puppet-dataprotector",
-  "project_page": "https://github.com/mmoll/puppet-dataprotector",
-  "issues_url": "https://github.com/mmoll/puppet-dataprotector/issues",
+  "source": "https://github.com/psyco01/puppet-dataprotector",
+  "project_page": "https://github.com/psyco01/puppet-dataprotector",
+  "issues_url": "https://github.com/psyco01/puppet-dataprotector/issues",
   "tags": [ "backup", "HP Data Protector", "Omniback" ],
   "dependencies": [
     {
@@ -25,7 +25,7 @@
     },
     {
     "operatingsystem": "Debian",
-    "operatingsystemrelease": [ "6", "7" ]
+    "operatingsystemrelease": [ "6", "7", "8" ]
     },
     {
     "operatingsystem": "RedHat",
@@ -37,7 +37,7 @@
     },
     {
     "operatingsystem": "Ubuntu",
-    "operatingsystemrelease": [ "10.04", "12.04", "14.04" ]
+    "operatingsystemrelease": [ "10.04", "12.04", "14.04", "15.04" ]
     }
   ]
 }

@@ -7,6 +7,8 @@ else
 end
 
 gem 'rake'
+gem 'rspec-core'
+gem 'puppetlabs_spec_helper'
 gem 'puppet-lint'
 gem 'puppet-lint-absolute_template_path'
 gem 'puppet-lint-variable_contains_upcase'

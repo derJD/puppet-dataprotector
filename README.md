@@ -1,5 +1,5 @@
 # Puppet module to manage clients for HP Data Protector
-[![Build Status](https://secure.travis-ci.org/mmoll/puppet-dataprotector.png)](http://travis-ci.org/mmoll/puppet-dataprotector)
+[![Build Status](https://secure.travis-ci.org/psyco01/puppet-dataprotector.png)](http://travis-ci.org/psyco01/puppet-dataprotector)
 
 ## Example:
 
