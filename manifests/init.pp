@@ -26,6 +26,7 @@
 #
 # === Copyright
 #
+# Copyright 2012 by Michael Moll
 # Copyright 2016 by Jean-Denis Gebhardt
 #
 class dataprotector (
