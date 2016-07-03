@@ -5,10 +5,13 @@
 
 ```puppet
   class { 'dataprotector':
-    cm_ip   => '1.2.3.4',
-    cm_name => 'cellmanager.dom.ain'
+    cellmanager =>  {
+      address     => '1.2.3.4',
+      name        => 'cellmanager.dom.ain' },
+    allow_hosts => ['localhost', '10.0.0.*', '10.1.0.0/255.255.255.0'],
   }
 ```
 
-* cm_ip is the IP of the cell manager.
-* cm_name is the FQDN of the cell manager.
+* cellmanager['address'] is the IP of the cell manager.
+* cellmanager['name'] is the FQDN of the cell manager.
+* allow_hosts is the list of IPs, Hosts and/or Subnets allowed to access the client.

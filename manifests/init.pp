@@ -4,89 +4,44 @@
 #
 # === Parameters
 #
-# [*cm_ip*]
-#   IP address of the cell manager (as seen from/to the client)
+# [*cellmanager*]
+#   Hash for IP address (address) and Hostname (name) of the cell manager (as seen from/to the client)
 #
-# [*cm_name*]
-#   Hostname of the cell manager (as given by the CM!)
+# [*allowed_hosts*]
+#   Array of allowed hosts/subnets accessing this client
 #
 # === Examples
 #
 #  class { 'dataprotector':
-#    cm_ip   => '1.2.3.4',
-#    cm_name => 'cellmanager.dom.ain'
+#    cellmanager =>  {
+#      address     => '1.2.3.4',
+#      name        => 'cellmanager.dom.ain' },
+#    allow_hosts => ['localhost', '10.0.0.*', '10.1.0.0/255.255.255.0'],
 #  }
 #
 # === Authors
 #
 # Michael Moll <mmoll@mmoll.at>
+# Jean-Denis Gebhardt <jd@der-jd.de>
 #
 # === Copyright
 #
-# Copyright 2012 by Michael Moll
+# Copyright 2016 by Jean-Denis Gebhardt
 #
-class dataprotector ($cm_ip, $cm_name) {
+class dataprotector (
+  $confdir        = $::dataprotector::params::confdir,
+  $cellmanager    = $::dataprotector::params::cellmanager,
+  $allow_hosts    = $::dataprotector::params::allow_hosts,
+  $is_cellmanager = $::dataprotector::params::is_dataprotector,
+  $use_mediaagent = $::dataprotector::params::use_mediaagent,
+) inherits dataprotector::params {
 
-  case $::osfamily {
-    'Debian': {
-      $corepackage = 'ob2-core'
-      $dapackage = 'ob2-da'
-    }
-    'RedHat', 'SuSE': {
-      $corepackage = 'OB2-CORE'
-      $dapackage = 'OB2-DA'
-    }
-    default: {
-    }
-  }
+  if ($confdir)     { validate_string($confdir) }
+  if ($allow_hosts) { validate_array($allow_hosts) }
+  if ($cellmanager) { validate_hash($cellmanager) }
+  if ($is_cellmanager) { validate_bool($is_cellmanager) }
+  if ($use_mediaagent) { validate_bool($use_mediaagent) }
 
-  package { $corepackage:
-    ensure  => 'installed',
-  }
-
-  package { $dapackage:
-    ensure  => 'installed',
-    require => Package[$corepackage],
-  }
-
-  augeas { 'remove5555port':
-    before  => Package[$corepackage],
-    context => '/files/etc/services',
-    changes =>  [
-                'rm service-name[. = "personal-agent"][protocol = "tcp"]',
-                'rm service-name[. = "personal-agent"][protocol = "udp"]',
-                'rm service-name[. = "rplay"][protocol = "udp"]'
-                ],
-  }
-
-  file { '/var/log/omni':
-    ensure  => link,
-    target  => '/var/opt/omni/log',
-    require => Package[$corepackage],
-  }
-
-  host { $cm_name:
-    ensure => present,
-    ip     => $cm_ip,
-    target => '/etc/hosts',
-  }
-
-  file { '/etc/opt/omni/client/allow_hosts':
-    ensure  => file,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    content => "${cm_ip}\n",
-    require => Package[$corepackage],
-  }
-
-  file { '/etc/opt/omni/client/cell_server':
-    ensure  => file,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    content => "${cm_name}\n",
-    require => Package[$corepackage],
-  }
-
+  class {'dataprotector::install': }
+  class {'dataprotector::config':  }
 }
